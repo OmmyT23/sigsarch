@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Miei Link</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8a2387, #e94057, #f27121);
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .profile {
+            margin-bottom: 30px;
+        }
+        
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0 auto 15px;
+        }
+        
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .bio {
+            margin-bottom: 25px;
+            font-size: 16px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        .link {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .link-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .link-text {
+            font-size: 16px;
+            text-align: left;
+            flex-grow: 1;
+        }
+        
+        .link-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .link-desc {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Dark theme */
+        body.dark-theme {
+            background: linear-gradient(135deg, #121212, #2d3436, #121212);
+        }
+        
+        /* Media queries */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .bio {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    
+    <div class="container">
+        <div class="profile">
+            <div class="profile-pic">
+                <img src="/api/placeholder/400/400" alt="Profilo" id="profilePic">
+            </div>
+            <h1 id="profileName">Il Tuo Nome</h1>
+            <p class="bio" id="profileBio">Descrizione breve della tua attività e dei tuoi interessi. Modifica questo testo nel file JavaScript.</p>
+        </div>
+        
+        <div class="links" id="linksContainer">
+            <!-- I link verranno generati dinamicamente dal JavaScript -->
+        </div>
+        
+        <div class="footer">
+            <p id="footerText">© 2025 - Creato con ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // Configurazione del profilo
+        const profileConfig = {
+            name: "Tommaso Signorini",
+            bio: "Physics Student | Founder of Sigborini's Archives",
+            profilePicUrl: "https://raw.githubusercontent.com/tuonome/sigsarch/main/profile.jpg", // Inserisci qui l'URL della tua immagine di profilo
+            footerText: "© 2025 - SigsArch"
+        };
+
+        // Configurazione dei link
+        const links = [
+            {
+                title: "X / Twitter",
+                description: "Follow me on X",
+                url: "https://x.com/ST_SMX",
+                icon: "𝕏"
+            },
+            {
+                title: "Instagram",
+                description: "Creative Side",
+                url: "https://instagram.com/ttommasosig",
+                icon: "📸"
+            },
+            {
+                title: "SigsArch.com",
+                description: "Learn about Physics and other stuff",
+                url: "https://stadyt-new.webflow.io/",
+                icon: "🌐"
+            },
+            {
+                title: "Readings",
+                description: "Libri che consiglio e recensioni",
+                url: "https://tuosito.it/letture",
+                icon: "📚"
+            },
+            {
+                title: "Contact me",
+                description: "For inquiries contact me",
+                url: "mailto:sigsarch@gmail.com",
+                icon: "✉️"
+            }
+        ];
+
+        // Inizializza la pagina
+        function initPage() {
+            // Imposta le informazioni del profilo
+            document.getElementById("profileName").textContent = profileConfig.name;
+            document.getElementById("profileBio").textContent = profileConfig.bio;
+            document.getElementById("profilePic").src = profileConfig.profilePicUrl;
+            document.getElementById("footerText").textContent = profileConfig.footerText;
+            
+            // Genera i link
+            const linksContainer = document.getElementById("linksContainer");
+            
+            links.forEach(link => {
+                const linkElement = document.createElement("a");
+                linkElement.href = link.url;
+                linkElement.className = "link";
+                linkElement.target = "_blank";
+                linkElement.rel = "noopener noreferrer";
+                
+                linkElement.innerHTML = `
+                    <div class="link-icon">${link.icon}</div>
+                    <div class="link-text">
+                        <div class="link-title">${link.title}</div>
+                        <div class="link-desc">${link.description}</div>
+                    </div>
+                `;
+                
+                linksContainer.appendChild(linkElement);
+            });
+        }
+
+        // Funzionalità cambio tema
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-theme");
+            themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
+        });
+
+        // Carica la pagina
+        window.onload = initPage;
+    </script>
+</body>
+</html>
