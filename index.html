@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Miei Link</title>
+    <title>SigsArch.com | Portale di Fisica</title>
     <style>
-        /* Reset CSS */
+        /* Variabili e reset CSS */
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #f5f5f7;
+            --text-color: #333;
+            --light-gray: #f5f5f7;
+            --dark-gray: #86868b;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,273 +24,949 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #8a2387, #e94057, #f27121);
-            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
             line-height: 1.6;
+            background-color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Layout generale */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: var(--text-color);
+        }
+        
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Hero Slider */
+        .slider {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            margin: 24px 0;
+        }
+        
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            color: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            padding: 0 64px;
+            position: relative;
+        }
+        
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+        
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .slide h2 {
+            font-size: 42px;
+            margin-bottom: 16px;
+        }
+        
+        .slide p {
+            font-size: 18px;
+            margin-bottom: 24px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .cta-button:hover {
+            background-color: #0055b3;
+            transform: translateY(-2px);
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .slider-dot.active {
+            background-color: white;
+        }
+        
+        /* Sezioni corsi */
+        .course-section {
+            margin: 80px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
+            margin-bottom: 24px;
+        }
+        
+        .view-all {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .view-all:hover {
+            text-decoration: underline;
+        }
+        
+        .course-cards {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 8px 4px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .course-cards::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+        
+        .card {
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
             padding: 20px;
         }
         
-        .container {
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
         
-        .profile {
-            margin-bottom: 30px;
+        .card-text {
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-bottom: 16px;
         }
         
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 15px;
-            background-color: #f5f5f5;
+        .card-meta {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin: 0 auto 15px;
+            font-size: 14px;
+            color: var(--dark-gray);
         }
         
-        .profile-pic img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        
-        .bio {
-            margin-bottom: 25px;
-            font-size: 16px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        
-        .link {
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 16px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #fff;
+        .card-category {
+            display: inline-block;
+            background-color: var(--light-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 500;
         }
         
-        .link:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .link-icon {
-            font-size: 24px;
-            margin-right: 15px;
-            width: 24px;
-            height: 24px;
+        .scroll-buttons {
             display: flex;
-            align-items: center;
             justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
         }
         
-        .link-text {
-            font-size: 16px;
-            text-align: left;
-            flex-grow: 1;
-        }
-        
-        .link-title {
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-        
-        .link-desc {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
-        /* Theme toggle */
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
+        .scroll-btn {
+            background-color: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: var(--transition);
         }
         
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .scroll-btn:hover {
+            background-color: var(--light-gray);
+            border-color: rgba(0, 0, 0, 0.2);
         }
         
-        /* Dark theme */
-        body.dark-theme {
-            background: linear-gradient(135deg, #121212, #2d3436, #121212);
+        /* Feedback section */
+        .feedback-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+            border-radius: var(--border-radius);
         }
         
-        /* Media queries */
+        .feedback-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .feedback-title {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+        
+        .feedback-text {
+            margin-bottom: 32px;
+            color: var(--dark-gray);
+        }
+        
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: left;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-input,
+        .form-textarea {
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-start;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0055b3;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #f9f9fb;
+            padding: 60px 0 24px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--dark-gray);
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .slider {
+                height: 400px;
+            }
+            
+            .slide {
+                padding: 0 32px;
+            }
+            
+            .slide h2 {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .card {
+                min-width: 260px;
+            }
+        }
+        
         @media (max-width: 480px) {
-            .container {
-                width: 95%;
+            .slider {
+                height: 300px;
             }
             
-            .profile-pic {
-                width: 100px;
-                height: 100px;
+            .slide h2 {
+                font-size: 28px;
             }
             
-            h1 {
+            .section-title {
                 font-size: 22px;
             }
             
-            .bio {
-                font-size: 15px;
+            .card {
+                min-width: 240px;
+            }
+            
+            .submit-btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">Sigs<span>Arch</span></a>
+            <ul class="nav-links">
+                <li><a href="#chimica">Chimica</a></li>
+                <li><a href="#struttura">Struttura della Materia</a></li>
+                <li><a href="#meccanica">Meccanica Statistica</a></li>
+                <li><a href="#feedback">Feedback</a></li>
+                <li><a href="/about">Chi Sono</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
     
+    <!-- Hero Slider -->
     <div class="container">
-        <div class="profile">
-            <div class="profile-pic">
-                <img src="/api/placeholder/400/400" alt="Profilo" id="profilePic">
+        <div class="slider">
+            <div class="slides">
+                <div class="slide" style="background-image: url('/api/placeholder/1200/500')">
+                    <div class="slide-content">
+                        <h2>Benvenuto su SigsArch.com</h2>
+                        <p>Scopri i corsi di fisica spiegati in modo semplice e intuitivo. Approfondimenti, esercizi e risorse didattiche per studenti e appassionati.</p>
+                        <a href="#corsi" class="cta-button">Esplora i corsi</a>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('/api/placeholder/1200/500')">
+                    <div class="slide-content">
+                        <h2>Chimica</h2>
+                        <p>Dalla struttura atomica alle reazioni chimiche: tutti i concetti fondamentali spiegati con chiarezza.</p>
+                        <a href="#chimica" class="cta-button">Vai al corso</a>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('/api/placeholder/1200/500')">
+                    <div class="slide-content">
+                        <h2>Struttura della Materia</h2>
+                        <p>Esplora la composizione della materia dai livelli atomici fino ai sistemi complessi.</p>
+                        <a href="#struttura" class="cta-button">Vai al corso</a>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('/api/placeholder/1200/500')">
+                    <div class="slide-content">
+                        <h2>Meccanica Statistica</h2>
+                        <p>Scopri come le leggi microscopiche della fisica determinano il comportamento macroscopico dei sistemi.</p>
+                        <a href="#meccanica" class="cta-button">Vai al corso</a>
+                    </div>
+                </div>
             </div>
-            <h1 id="profileName">Il Tuo Nome</h1>
-            <p class="bio" id="profileBio">Descrizione breve della tua attività e dei tuoi interessi. Modifica questo testo nel file JavaScript.</p>
-        </div>
-        
-        <div class="links" id="linksContainer">
-            <!-- I link verranno generati dinamicamente dal JavaScript -->
-        </div>
-        
-        <div class="footer">
-            <p id="footerText">© 2025 - Creato con ❤️</p>
+            <div class="slider-nav">
+                <div class="slider-dot active"></div>
+                <div class="slider-dot"></div>
+                <div class="slider-dot"></div>
+                <div class="slider-dot"></div>
+            </div>
         </div>
     </div>
+    
+    <!-- Sezione Chimica -->
+    <section id="chimica" class="course-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Chimica</h2>
+                <a href="/chimica" class="view-all">Vedi tutti</a>
+            </div>
+            <div class="course-cards" id="chimica-cards">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Fondamenti</span>
+                        <h3 class="card-title">Struttura atomica</h3>
+                        <p class="card-text">Esplora la composizione dell'atomo, i modelli atomici e la tavola periodica degli elementi.</p>
+                        <div class="card-meta">
+                            <span>12 min di lettura</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Reazioni</span>
+                        <h3 class="card-title">Legami chimici</h3>
+                        <p class="card-text">Approfondimento sui diversi tipi di legami chimici e le loro proprietà.</p>
+                        <div class="card-meta">
+                            <span>15 min di lettura</span>
+                            <span>⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Termodinamica</span>
+                        <h3 class="card-title">Equilibrio chimico</h3>
+                        <p class="card-text">Comprendere il concetto di equilibrio nelle reazioni chimiche e i fattori che lo influenzano.</p>
+                        <div class="card-meta">
+                            <span>18 min di lettura</span>
+                            <span>⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Avanzato</span>
+                        <h3 class="card-title">Chimica organica</h3>
+                        <p class="card-text">Introduzione ai composti del carbonio e alle loro caratteristiche principali.</p>
+                        <div class="card-meta">
+                            <span>20 min di lettura</span>
+                            <span>⭐ 4.6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Laboratorio</span>
+                        <h3 class="card-title">Tecniche sperimentali</h3>
+                        <p class="card-text">Guida alle principali tecniche di laboratorio chimico e alla loro applicazione.</p>
+                        <div class="card-meta">
+                            <span>16 min di lettura</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-buttons">
+                <button class="scroll-btn" onclick="scrollCards('chimica-cards', -300)">←</button>
+                <button class="scroll-btn" onclick="scrollCards('chimica-cards', 300)">→</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sezione Struttura della Materia -->
+    <section id="struttura" class="course-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Struttura della Materia</h2>
+                <a href="/struttura" class="view-all">Vedi tutti</a>
+            </div>
+            <div class="course-cards" id="struttura-cards">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Fondamenti</span>
+                        <h3 class="card-title">Meccanica quantistica</h3>
+                        <p class="card-text">Introduzione ai principi fondamentali della meccanica quantistica e alle loro applicazioni.</p>
+                        <div class="card-meta">
+                            <span>22 min di lettura</span>
+                            <span>⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Atomica</span>
+                        <h3 class="card-title">Modelli atomici avanzati</h3>
+                        <p class="card-text">Dal modello di Bohr alla fisica quantistica: l'evoluzione della comprensione dell'atomo.</p>
+                        <div class="card-meta">
+                            <span>19 min di lettura</span>
+                            <span>⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Fisica dello stato solido</span>
+                        <h3 class="card-title">Reticoli cristallini</h3>
+                        <p class="card-text">Struttura, proprietà e classificazione dei solidi cristallini.</p>
+                        <div class="card-meta">
+                            <span>17 min di lettura</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Proprietà</span>
+                        <h3 class="card-title">Proprietà elettroniche</h3>
+                        <p class="card-text">Conduzione elettrica, semiconduttori e superconduttori: un'analisi approfondita.</p>
+                        <div class="card-meta">
+                            <span>21 min di lettura</span>
+                            <span>⭐ 4.6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Avanzato</span>
+                        <h3 class="card-title">Spettroscopia</h3>
+                        <p class="card-text">Tecniche spettroscopiche per l'analisi della struttura della materia.</p>
+                        <div class="card-meta">
+                            <span>20 min di lettura</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-buttons">
+                <button class="scroll-btn" onclick="scrollCards('struttura-cards', -300)">←</button>
+                <button class="scroll-btn" onclick="scrollCards('struttura-cards', 300)">→</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sezione Meccanica Statistica -->
+    <section id="meccanica" class="course-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meccanica Statistica</h2>
+                <a href="/meccanica" class="view-all">Vedi tutti</a>
+            </div>
+            <div class="course-cards" id="meccanica-cards">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Fondamenti</span>
+                        <h3 class="card-title">Introduzione alla meccanica statistica</h3>
+                        <p class="card-text">Concetti base e principi fondamentali della meccanica statistica.</p>
+                        <div class="card-meta">
+                            <span>18 min di lettura</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Termodinamica</span>
+                        <h3 class="card-title">Ensemble statistici</h3>
+                        <p class="card-text">Ensemble microcanonico, canonico e gran canonico: proprietà e applicazioni.</p>
+                        <div class="card-meta">
+                            <span>25 min di lettura</span>
+                            <span>⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Applicazioni</span>
+                        <h3 class="card-title">Gas ideali e reali</h3>
+                        <p class="card-text">Trattazione statistica dei gas, dalle approssimazioni ideali ai modelli reali.</p>
+                        <div class="card-meta">
+                            <span>20 min di lettura</span>
+                            <span>⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Avanzato</span>
+                        <h3 class="card-title">Transizioni di fase</h3>
+                        <p class="card-text">Analisi delle transizioni di fase da una prospettiva microscopica.</p>
+                        <div class="card-meta">
+                            <span>24 min di lettura</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <span class="card-category">Quantistica</span>
+                        <h3 class="card-title">Statistica quantistica</h3>
+                        <p class="card-text">Distribuzione di Fermi-Dirac e Bose-Einstein: applicazioni ai sistemi quantistici.</p>
+                        <div class="card-meta">
+                            <span>23 min di lettura</span>
+                            <span>⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-buttons">
+                <button class="scroll-btn" onclick="scrollCards('meccanica-cards', -300)">←</button>
+                <button class="scroll-btn" onclick="scrollCards('meccanica-cards', 300)">→</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sezione Feedback -->
+    <section id="feedback" class="feedback-section">
+        <div class="container">
+            <div class="feedback-container">
+                <h2 class="feedback-title">Inviaci un feedback</h2>
+                <p class="feedback-text">Hai suggerimenti per migliorare il sito o idee per nuovi articoli? La tua opinione è importante per rendere SigsArch sempre migliore.</p>
+                <form class="feedback-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nome</label>
+                        <input type="text" id="name" class="form-input" placeholder="Il tuo nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="La tua email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Argomento</label>
+                        <input type="text" id="subject" class="form-input" placeholder="Argomento del feedback">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Messaggio</label>
+                        <textarea id="message" class="form-textarea" placeholder="Il tuo messaggio o suggerimento" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Invia feedback</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SigsArch</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about">Chi sono</a></li>
+                        <li><a href="/metodo">Metodologia</a></li>
+                        <li><a href="/collabora">Collabora</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Corsi</h3>
+                    <ul class="footer-links">
+                        <li><a href="/chimica">Chimica</a></li>
+                        <li><a href="/struttura">Struttura della Materia</a></li>
+                        <li><a href="/meccanica">Meccanica Statistica</a></li>
+                        <li><a href="/prossimi">Prossimi corsi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Risorse</h3>
+                    <ul class="footer-links">
+                        <li><a href="/risorse/formule">Formulari</a></li>
+                        <li><a href="/risorse/libri">Libri consigliati</a></li>
+                        <li><a href="/risorse/software">Software utili</a></li>
+                        <li><a href="/risorse/faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Seguimi</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://x.com/ST_SMX">Twitter / X</a></li>
+                        <li><a href="https://instagram.com/ttommasosig">Instagram</a></li>
+                        <li><a href="mailto:sigsarch@gmail.com">Email</a></li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="https://x.com/ST_SMX" class="social-link">𝕏</a>
+                        <a href="https://instagram.com/ttommasosig" class="social-link">📸</a>
+                        <a href="mailto:sigsarch@gmail.com" class="social-link">✉️</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SigsArch.com - Tutti i diritti riservati. Creato da Tommaso Signorini</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Configurazione del profilo
-        const profileConfig = {
-            name: "Tommaso Signorini",
-            bio: "Physics Student | Founder of Sigborini's Archives",
-            profilePicUrl: "https://raw.githubusercontent.com/tuonome/sigsarch/main/profile.jpg", // Inserisci qui l'URL della tua immagine di profilo
-            footerText: "© 2025 - SigsArch"
-        };
-
-        // Configurazione dei link
-        const links = [
-            {
-                title: "X / Twitter",
-                description: "Follow me on X",
-                url: "https://x.com/ST_SMX",
-                icon: "𝕏"
-            },
-            {
-                title: "Instagram",
-                description: "Creative Side",
-                url: "https://instagram.com/ttommasosig",
-                icon: "📸"
-            },
-            {
-                title: "SigsArch.com",
-                description: "Learn about Physics and other stuff",
-                url: "https://stadyt-new.webflow.io/",
-                icon: "🌐"
-            },
-            {
-                title: "Readings",
-                description: "Libri che consiglio e recensioni",
-                url: "https://tuosito.it/letture",
-                icon: "📚"
-            },
-            {
-                title: "Contact me",
-                description: "For inquiries contact me",
-                url: "mailto:sigsarch@gmail.com",
-                icon: "✉️"
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = slides.length;
+        
+        function showSlide(index) {
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
             }
-        ];
-
-        // Inizializza la pagina
-        function initPage() {
-            // Imposta le informazioni del profilo
-            document.getElementById("profileName").textContent = profileConfig.name;
-            document.getElementById("profileBio").textContent = profileConfig.bio;
-            document.getElementById("profilePic").src = profileConfig.profilePicUrl;
-            document.getElementById("footerText").textContent = profileConfig.footerText;
             
-            // Genera i link
-            const linksContainer = document.getElementById("linksContainer");
+            const slidesContainer = document.querySelector('.slides');
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
             
-            links.forEach(link => {
-                const linkElement = document.createElement("a");
-                linkElement.href = link.url;
-                linkElement.className = "link";
-                linkElement.target = "_blank";
-                linkElement.rel = "noopener noreferrer";
-                
-                linkElement.innerHTML = `
-                    <div class="link-icon">${link.icon}</div>
-                    <div class="link-text">
-                        <div class="link-title">${link.title}</div>
-                        <div class="link-desc">${link.description}</div>
-                    </div>
-                `;
-                
-                linksContainer.appendChild(linkElement);
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
             });
         }
-
-        // Funzionalità cambio tema
-        const themeToggle = document.getElementById("themeToggle");
-        themeToggle.addEventListener("click", () => {
-            document.body.classList.toggle("dark-theme");
-            themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
+        
+        // Add click event to dots
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+            });
         });
-
-        // Carica la pagina
-        window.onload = initPage;
+        
+        // Auto slide
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // Cards scrolling function
+        function scrollCards(containerId, scrollAmount) {
+            const container = document.getElementById(containerId);
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+        
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '60px';
+                navLinks.style.right = '20px';
+                navLinks.style.backgroundColor = 'white';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderRadius = '12px';
+                navLinks.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            }
+        });
+        
+        // Reset mobile menu on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+                navLinks.style.position = 'static';
+                navLinks.style.flexDirection = 'row';
+                navLinks.style.padding = '0';
+                navLinks.style.backgroundColor = 'transparent';
+                navLinks.style.boxShadow = 'none';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+        
+        // Form submission
+        const feedbackForm = document.querySelector('.feedback-form');
+        
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send this data to your server
+            // For now, we'll just show an alert
+            alert(`Grazie per il tuo feedback, ${name}! Il messaggio è stato inviato.`);
+            feedbackForm.reset();
+        });
     </script>
 </body>
 </html>
