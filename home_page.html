@@ -47,7 +47,7 @@
         }
         
         .tiktok-card {
-            transition: all 0.5s ease-out;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         
         /* Stili responsive */
@@ -124,6 +124,7 @@
         ];
 
         let activeIndex = 0;
+        let isAnimating = false; // Flag per controllare se è in corso un'animazione
         const container = document.getElementById('carousel-container');
         const prevButton = document.getElementById('prev-button');
         const nextButton = document.getElementById('next-button');
@@ -156,43 +157,48 @@
             }
         }
         
-        // Crea e aggiorna le card del carousel
-        function renderCards() {
+        // Ottieni la posizione di una carta
+        function getCardPositionStyles(position) {
+            let transform = '';
+            let opacity = 1;
+            let zIndex = 5 - position;
+            
+            if (position > 2) zIndex = 0;
+            
+            if (position === 0) {
+                // Card frontale
+                transform = 'translateX(0) translateY(0) translateZ(0) rotateY(0)';
+                opacity = 1;
+            } else if (position === 1) {
+                // Prima card dietro
+                transform = 'translateX(40%) translateY(-20%) translateZ(-80px) rotateY(5deg)';
+                opacity = 0.8;
+            } else if (position === 2) {
+                // Seconda card dietro
+                transform = 'translateX(70%) translateY(-30%) translateZ(-160px) rotateY(10deg)';
+                opacity = 0.6;
+            } else {
+                // Card nascoste
+                transform = 'translateX(100%) translateY(-40%) translateZ(-240px) rotateY(15deg)';
+                opacity = 0;
+            }
+            
+            return { transform, opacity, zIndex };
+        }
+
+        // Inizializza le carte del carousel
+        function initCards() {
             container.innerHTML = '';
             
             tiktokData.forEach((tiktok, index) => {
-                // Calcola la posizione relativa rispetto all'indice attivo
                 const position = (index - activeIndex + tiktokData.length) % tiktokData.length;
-                
-                // Configurazione della trasformazione 3D
-                let zIndex = 5 - position;
-                if (position > 2) zIndex = 0;
-                
-                // Configurazione dello stile delle card
-                let transform = '';
-                let opacity = 1;
-                
-                if (position === 0) {
-                    // Card frontale
-                    transform = 'translateX(0) translateY(0) translateZ(0) rotateY(0)';
-                    opacity = 1;
-                } else if (position === 1) {
-                    // Prima card dietro
-                    transform = 'translateX(40%) translateY(-20%) translateZ(-80px) rotateY(5deg)';
-                    opacity = 0.8;
-                } else if (position === 2) {
-                    // Seconda card dietro
-                    transform = 'translateX(70%) translateY(-30%) translateZ(-160px) rotateY(10deg)';
-                    opacity = 0.6;
-                } else {
-                    // Card nascoste
-                    transform = 'translateX(100%) translateY(-40%) translateZ(-240px) rotateY(15deg)';
-                    opacity = 0;
-                }
+                const { transform, opacity, zIndex } = getCardPositionStyles(position);
                 
                 // Crea l'elemento card
                 const card = document.createElement('div');
                 card.className = 'absolute top-0 left-0 w-full h-full tiktok-card';
+                card.id = `card-${index}`;
+                card.dataset.index = index;
                 card.style.transform = transform;
                 card.style.opacity = opacity;
                 card.style.zIndex = zIndex;
@@ -226,25 +232,115 @@
             });
         }
         
+        // Aggiorna le posizioni delle carte con animazione
+        function updateCardsWithAnimation() {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            const cards = container.querySelectorAll('.tiktok-card');
+            
+            // Prepara le nuove posizioni per ciascuna carta
+            cards.forEach(card => {
+                const index = parseInt(card.dataset.index);
+                const position = (index - activeIndex + tiktokData.length) % tiktokData.length;
+                const { transform, opacity, zIndex } = getCardPositionStyles(position);
+                
+                // Imposta zIndex immediamente per l'ordine corretto
+                card.style.zIndex = zIndex;
+                
+                // Animazione usando GSAP-like approach
+                setTimeout(() => {
+                    card.style.transform = transform;
+                    card.style.opacity = opacity;
+                }, 50); // Piccolo ritardo per far funzionare l'animazione
+            });
+            
+            // Reimposta il flag di animazione dopo che l'animazione è terminata
+            setTimeout(() => {
+                isAnimating = false;
+            }, 600); // Durata dell'animazione + margine
+        }
+        
         // Funzioni per navigare nel carousel
         function goToPrevious() {
+            if (isAnimating) return;
             activeIndex = (activeIndex === 0) ? tiktokData.length - 1 : activeIndex - 1;
-            renderCards();
+            updateCardsWithAnimation();
         }
         
         function goToNext() {
+            if (isAnimating) return;
             activeIndex = (activeIndex === tiktokData.length - 1) ? 0 : activeIndex + 1;
-            renderCards();
+            updateCardsWithAnimation();
         }
         
-        // Event listeners
+        // Aggiungi controllo con tastiera
+        function handleKeyboardNavigation(e) {
+            if (e.key === 'ArrowLeft') {
+                goToPrevious();
+            } else if (e.key === 'ArrowRight') {
+                goToNext();
+            }
+        }
+        
+        // Aggiungi controllo touch swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        function handleTouchStart(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+        
+        function handleTouchEnd(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swipe verso sinistra
+                goToNext();
+            } else if (touchEndX > touchStartX + 50) {
+                // Swipe verso destra
+                goToPrevious();
+            }
+        }
+        
+        // Autorotazione (opzionale, commentata per default)
+        /*
+        let autoplayInterval;
+        
+        function startAutoplay() {
+            autoplayInterval = setInterval(() => {
+                goToNext();
+            }, 5000); // Cambia scheda ogni 5 secondi
+        }
+        
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+        */
+        
+        // Aggiungi event listeners
         prevButton.addEventListener('click', goToPrevious);
         nextButton.addEventListener('click', goToNext);
         window.addEventListener('resize', updateLayout);
+        document.addEventListener('keydown', handleKeyboardNavigation);
+        container.addEventListener('touchstart', handleTouchStart, { passive: true });
+        container.addEventListener('touchend', handleTouchEnd, { passive: true });
+        
+        // Ferma autoplay quando l'utente interagisce
+        /*
+        prevButton.addEventListener('mouseenter', stopAutoplay);
+        nextButton.addEventListener('mouseenter', stopAutoplay);
+        container.addEventListener('mouseenter', stopAutoplay);
+        container.addEventListener('touchstart', stopAutoplay);
+        */
         
         // Inizializzazione
         updateLayout();
-        renderCards();
+        initCards();
+        // startAutoplay(); // Abilita questa riga se desideri l'autorotazione
     </script>
 </body>
 </html>
