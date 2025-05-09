@@ -1,72 +1,166 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Video } from 'lucide-react';
-
-// Mock data dei TikTok (sostituisci con i tuoi veri TikTok)
-const tiktokData = [
-  { id: 1, title: "Il mio primo TikTok", image: "/api/placeholder/400/600", likes: 1200, views: 5000 },
-  { id: 2, title: "Tendenze social", image: "/api/placeholder/400/600", likes: 2500, views: 10000 },
-  { id: 3, title: "Tutorial creativo", image: "/api/placeholder/400/600", likes: 1800, views: 7500 },
-  { id: 4, title: "Dietro le quinte", image: "/api/placeholder/400/600", likes: 3200, views: 12000 },
-  { id: 5, title: "Q&A speciale", image: "/api/placeholder/400/600", likes: 2100, views: 8800 },
-];
-
-const TikTokCarousel = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(1200);
-  
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-  const isMobile = windowWidth < 768;
-  
-  const goToPrevious = () => {
-    setActiveIndex((prevIndex) => (prevIndex === 0 ? tiktokData.length - 1 : prevIndex - 1));
-  };
-  
-  const goToNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex === tiktokData.length - 1 ? 0 : prevIndex + 1));
-  };
-  
-  return (
-    <div className="w-full bg-gradient-to-br from-purple-900 via-gray-900 to-black text-white overflow-hidden">
-      <div className={`container mx-auto px-4 py-16 ${isMobile ? 'flex flex-col gap-12' : 'flex flex-row items-center'}`}>
-        {/* Colonna sinistra - Testo coinvolgente */}
-        <div className={`${isMobile ? 'w-full' : 'w-1/2'} flex flex-col justify-center space-y-6 py-8`}>
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">
-            Scopri i miei video virali su TikTok
-          </h2>
-          <p className="text-xl text-gray-300">
-            Entra nel mio mondo creativo e lasciati ispirare dai contenuti che hanno conquistato migliaia di follower.
-            Un mix unico di creatività, passione e tendenze.
-          </p>
-          <div className="pt-4">
-            <a 
-              href="https://tiktok.com/@il-tuo-profilo" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
-            >
-              <Video className="mr-2 h-5 w-5" />
-              <span className="font-semibold">Seguimi su TikTok</span>
-            </a>
-          </div>
-        </div>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Carousel</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    height: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Stili personalizzati */
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #4a1d96 0%, #111827 50%, #000000 100%);
+        }
         
-        {/* Colonna destra - Carousel 3D */}
-        <div className={`${isMobile ? 'w-full' : 'w-1/2'} relative`}>
-          <div className="relative h-96 md:h-128 flex items-center justify-center">
-            {/* Contenitore del carousel */}
-            <div className="w-full h-full relative" style={{ perspective: '1000px' }}>
-              {/* Cards */}
-              {tiktokData.map((tiktok, index) => {
+        .bg-text-gradient {
+            background: linear-gradient(90deg, #ec4899 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(90deg, #ec4899 0%, #9333ea 100%);
+        }
+        
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #db2777 0%, #7e22ce 100%);
+        }
+        
+        .perspective {
+            perspective: 1000px;
+        }
+        
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        
+        .tiktok-card {
+            transition: all 0.5s ease-out;
+        }
+        
+        /* Stili responsive */
+        @media (max-width: 768px) {
+            .section-container {
+                flex-direction: column;
+            }
+            
+            .text-col, .carousel-col {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="w-full bg-gradient-custom text-white overflow-hidden">
+        <div id="section-container" class="container mx-auto px-4 py-16 flex flex-row items-center section-container">
+            <!-- Colonna sinistra - Testo coinvolgente -->
+            <div id="text-col" class="w-1/2 flex flex-col justify-center space-y-6 py-8 text-col">
+                <h2 class="text-4xl md:text-5xl font-bold leading-tight bg-text-gradient">
+                    Scopri i miei video virali su TikTok
+                </h2>
+                <p class="text-xl text-gray-300">
+                    Entra nel mio mondo creativo e lasciati ispirare dai contenuti che hanno conquistato migliaia di follower.
+                    Un mix unico di creatività, passione e tendenze.
+                </p>
+                <div class="pt-4">
+                    <a 
+                        href="https://tiktok.com/@il-tuo-profilo" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center px-6 py-3 rounded-full btn-gradient transition-all duration-300 shadow-lg"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16 8v8a4 4 0 0 1-8 0V8"/><rect width="20" height="16" x="2" y="4" rx="2"/></svg>
+                        <span class="font-semibold">Seguimi su TikTok</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Colonna destra - Carousel 3D -->
+            <div id="carousel-col" class="w-1/2 relative carousel-col">
+                <div class="relative h-96 md:h-128 flex items-center justify-center perspective">
+                    <!-- Contenitore del carousel -->
+                    <div id="carousel-container" class="w-full h-full relative preserve-3d">
+                        <!-- Le card verranno generate dinamicamente dal JavaScript -->
+                    </div>
+                    
+                    <!-- Controlli -->
+                    <button 
+                        id="prev-button"
+                        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-purple-600 transition-colors z-10"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <button 
+                        id="next-button"
+                        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-purple-600 transition-colors z-10"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dati TikTok di esempio (sostituisci con i tuoi)
+        const tiktokData = [
+            { id: 1, title: "Il mio primo TikTok", image: "https://placehold.co/400x600/9333ea/ffffff?text=TikTok+1", likes: 1200, views: 5000 },
+            { id: 2, title: "Tendenze social", image: "https://placehold.co/400x600/9333ea/ffffff?text=TikTok+2", likes: 2500, views: 10000 },
+            { id: 3, title: "Tutorial creativo", image: "https://placehold.co/400x600/9333ea/ffffff?text=TikTok+3", likes: 1800, views: 7500 },
+            { id: 4, title: "Dietro le quinte", image: "https://placehold.co/400x600/9333ea/ffffff?text=TikTok+4", likes: 3200, views: 12000 },
+            { id: 5, title: "Q&A speciale", image: "https://placehold.co/400x600/9333ea/ffffff?text=TikTok+5", likes: 2100, views: 8800 },
+        ];
+
+        let activeIndex = 0;
+        const container = document.getElementById('carousel-container');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        
+        // Verifica se siamo su mobile
+        function isMobile() {
+            return window.innerWidth < 768;
+        }
+        
+        // Aggiorna il layout in base alla larghezza dello schermo
+        function updateLayout() {
+            const sectionContainer = document.getElementById('section-container');
+            const textCol = document.getElementById('text-col');
+            const carouselCol = document.getElementById('carousel-col');
+            
+            if (isMobile()) {
+                sectionContainer.classList.remove('flex-row');
+                sectionContainer.classList.add('flex-col', 'gap-12');
+                textCol.classList.remove('w-1/2');
+                textCol.classList.add('w-full');
+                carouselCol.classList.remove('w-1/2');
+                carouselCol.classList.add('w-full');
+            } else {
+                sectionContainer.classList.add('flex-row');
+                sectionContainer.classList.remove('flex-col', 'gap-12');
+                textCol.classList.add('w-1/2');
+                textCol.classList.remove('w-full');
+                carouselCol.classList.add('w-1/2');
+                carouselCol.classList.remove('w-full');
+            }
+        }
+        
+        // Crea e aggiorna le card del carousel
+        function renderCards() {
+            container.innerHTML = '';
+            
+            tiktokData.forEach((tiktok, index) => {
                 // Calcola la posizione relativa rispetto all'indice attivo
                 const position = (index - activeIndex + tiktokData.length) % tiktokData.length;
                 
@@ -79,78 +173,78 @@ const TikTokCarousel = () => {
                 let opacity = 1;
                 
                 if (position === 0) {
-                  // Card frontale
-                  transform = 'translateX(0) translateY(0) translateZ(0) rotateY(0)';
-                  opacity = 1;
+                    // Card frontale
+                    transform = 'translateX(0) translateY(0) translateZ(0) rotateY(0)';
+                    opacity = 1;
                 } else if (position === 1) {
-                  // Prima card dietro
-                  transform = 'translateX(40%) translateY(-20%) translateZ(-80px) rotateY(5deg)';
-                  opacity = 0.8;
+                    // Prima card dietro
+                    transform = 'translateX(40%) translateY(-20%) translateZ(-80px) rotateY(5deg)';
+                    opacity = 0.8;
                 } else if (position === 2) {
-                  // Seconda card dietro
-                  transform = 'translateX(70%) translateY(-30%) translateZ(-160px) rotateY(10deg)';
-                  opacity = 0.6;
+                    // Seconda card dietro
+                    transform = 'translateX(70%) translateY(-30%) translateZ(-160px) rotateY(10deg)';
+                    opacity = 0.6;
                 } else {
-                  // Card nascoste
-                  transform = 'translateX(100%) translateY(-40%) translateZ(-240px) rotateY(15deg)';
-                  opacity = 0;
+                    // Card nascoste
+                    transform = 'translateX(100%) translateY(-40%) translateZ(-240px) rotateY(15deg)';
+                    opacity = 0;
                 }
                 
-                return (
-                  <div
-                    key={tiktok.id}
-                    className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-out"
-                    style={{
-                      transform,
-                      opacity,
-                      zIndex,
-                      transformStyle: 'preserve-3d',
-                    }}
-                  >
-                    <div className="w-64 md:w-72 h-full bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-purple-500/30 cursor-pointer hover:border-purple-500 transition-colors">
-                      {/* Immagine del TikTok */}
-                      <div className="relative h-3/4 overflow-hidden">
-                        <img 
-                          src={tiktok.image} 
-                          alt={tiktok.title} 
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-                          <div className="flex items-center space-x-2">
-                            <span className="text-pink-500">♥ {tiktok.likes}</span>
-                            <span className="text-gray-300">👁️ {tiktok.views}</span>
-                          </div>
+                // Crea l'elemento card
+                const card = document.createElement('div');
+                card.className = 'absolute top-0 left-0 w-full h-full tiktok-card';
+                card.style.transform = transform;
+                card.style.opacity = opacity;
+                card.style.zIndex = zIndex;
+                
+                // Contenuto della card
+                card.innerHTML = `
+                    <div class="w-64 md:w-72 h-full bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-purple-500/30 cursor-pointer hover:border-purple-500 transition-colors">
+                        <!-- Immagine del TikTok -->
+                        <div class="relative h-3/4 overflow-hidden">
+                            <img 
+                                src="${tiktok.image}" 
+                                alt="${tiktok.title}" 
+                                class="w-full h-full object-cover"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-pink-500">♥ ${tiktok.likes}</span>
+                                    <span class="text-gray-300">👁️ ${tiktok.views}</span>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      {/* Info del TikTok */}
-                      <div className="p-4">
-                        <h3 className="font-bold text-lg text-white truncate">{tiktok.title}</h3>
-                        <p className="text-gray-400 text-sm mt-1">Tocca per vedere il video completo</p>
-                      </div>
+                        <!-- Info del TikTok -->
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg text-white truncate">${tiktok.title}</h3>
+                            <p class="text-gray-400 text-sm mt-1">Tocca per vedere il video completo</p>
+                        </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            
-            {/* Controlli */}
-            <button 
-              onClick={goToPrevious}
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-purple-600 transition-colors z-10"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-            <button 
-              onClick={goToNext}
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-purple-600 transition-colors z-10"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default TikTokCarousel;
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Funzioni per navigare nel carousel
+        function goToPrevious() {
+            activeIndex = (activeIndex === 0) ? tiktokData.length - 1 : activeIndex - 1;
+            renderCards();
+        }
+        
+        function goToNext() {
+            activeIndex = (activeIndex === tiktokData.length - 1) ? 0 : activeIndex + 1;
+            renderCards();
+        }
+        
+        // Event listeners
+        prevButton.addEventListener('click', goToPrevious);
+        nextButton.addEventListener('click', goToNext);
+        window.addEventListener('resize', updateLayout);
+        
+        // Inizializzazione
+        updateLayout();
+        renderCards();
+    </script>
+</body>
+</html>
