@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduzione all'Algebra Lineare: Classi di Equivalenza e Vettori Geometrici</title>
+    <!-- Inclusione di MathJax per il rendering LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['
+<body>
+    <h1>Introduzione all'Algebra Lineare: Classi di Equivalenza e Vettori Geometrici</h1>
+    
+    <h2>Introduzione</h2>
+    <p>
+        L'algebra lineare rappresenta uno dei pilastri fondamentali della matematica moderna, con applicazioni 
+        che spaziano dalla fisica teorica all'informatica, dall'ingegneria all'analisi dei dati. Questo articolo 
+        si propone di introdurre alcuni concetti basilari dell'algebra lineare, partendo dalle classi di equivalenza 
+        fino ad arrivare ai vettori geometrici e alle loro coordinate. I concetti qui presentati costituiscono la base 
+        necessaria per comprendere strutture matematiche più complesse come spazi vettoriali, trasformazioni lineari 
+        e applicazioni in geometria analitica.
+    </p>
+    
+    <h2>Classi di Equivalenza</h2>
+    
+    <h3>Definizione e Proprietà</h3>
+    <p>
+        Una classe di equivalenza è un concetto matematico che permette di raggruppare elementi secondo una relazione 
+        che soddisfa tre proprietà fondamentali: riflessività, simmetria e transitività. Date un insieme A e una relazione 
+        di equivalenza ℛ, si definisce classe di equivalenza [a] l'insieme di tutti gli elementi x∈A tali che x ℛ a.
+    </p>
+    
+    <p>In notazione formale, una relazione ℛ definisce una classe di equivalenza se:</p>
+    <ul>
+        <li>È riflessiva: $\forall a \in A, a \mathcal{R} a$</li>
+        <li>È simmetrica: $\forall a,b \in A$, se $a \mathcal{R} b$ allora $b \mathcal{R} a$</li>
+        <li>È transitiva: $\forall a,b,c \in A$, se $a \mathcal{R} b$ e $b \mathcal{R} c$ allora $a \mathcal{R} c$</li>
+    </ul>
+    
+    <p>
+        Nel contesto della nostra lezione, abbiamo esaminato diverse proprietà delle classi di equivalenza, 
+        dimostrando formalmente il loro comportamento.
+    </p>
+    
+    <h3>Proprietà delle Classi di Equivalenza</h3>
+    
+    <h4>1. Riflessività</h4>
+    <p>
+        La proprietà [a]₁ ≠ ∅ (la classe non è vuota) deriva direttamente dalla riflessività della relazione, 
+        poiché a∈[a]₁.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Per definizione, $a \mathcal{R} a$ (riflessività)</li>
+            <li>Quindi $a \in [a]_1$</li>
+            <li>Pertanto $[a]_1 \neq \emptyset$</li>
+        </ul>
+    </div>
+    
+    <h4>2. Simmetria e Relazione tra Classi</h4>
+    <p>
+        Per qualsiasi coppia di elementi a e b, vale che [a] = [b] se e solo se a ℛ b.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Supponiamo [a] = [b]
+                <ul>
+                    <li>Se c∈[a], allora c ℛ a</li>
+                    <li>Poiché [a] = [b], c∈[b], quindi c ℛ b</li>
+                    <li>In particolare, a∈[a], quindi a ℛ a</li>
+                    <li>Dato che [a] = [b], allora a∈[b], quindi a ℛ b</li>
+                </ul>
+            </li>
+            <li>Viceversa, supponiamo a ℛ b
+                <ul>
+                    <li>Vogliamo dimostrare che [a] = [b]</li>
+                    <li>Se x∈[a], allora x ℛ a</li>
+                    <li>Poiché a ℛ b e la relazione è transitiva, x ℛ b</li>
+                    <li>Quindi x∈[b]</li>
+                    <li>Analogamente, se y∈[b], allora y ℛ b</li>
+                    <li>Poiché a ℛ b e la relazione è simmetrica, b ℛ a</li>
+                    <li>Per transitività, y ℛ a, quindi y∈[a]</li>
+                    <li>Abbiamo dimostrato che [a]⊆[b] e [b]⊆[a], quindi [a]=[b]</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <h4>3. Disgiunzione di Classi Distinte</h4>
+    <p>
+        Se [a] ≠ [b], allora [a]∩[b] = ∅.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Supponiamo per assurdo che esista c∈[a]∩[b]</li>
+            <li>Allora c ℛ a e c ℛ b</li>
+            <li>Per la simmetria, a ℛ c</li>
+            <li>Per la transitività, a ℛ b</li>
+            <li>Quindi, per quanto dimostrato al punto 2, [a] = [b]</li>
+            <li>Ma questo contraddice l'ipotesi [a] ≠ [b]</li>
+            <li>Quindi [a]∩[b] = ∅</li>
+        </ul>
+    </div>
+    
+    <p>
+        Queste proprietà mostrano come le classi di equivalenza partizionino l'insieme A in sottoinsiemi disgiunti.
+    </p>
+    
+    <h2>Vettori Geometrici</h2>
+    
+    <h3>Definizione e Struttura</h3>
+    <p>
+        Nella seconda parte della lezione, abbiamo introdotto il concetto di vettore geometrico. Consideriamo un piano 
+        o uno spazio tridimensionale con un'origine O fissata. Un vettore geometrico rappresenta una quantità caratterizzata 
+        da modulo, direzione e verso.
+    </p>
+    
+    <p>
+        Formalmente, dato un punto A, il vettore $\overrightarrow{OA}$ ha origine in O e termina in A. 
+        È possibile definire operazioni sui vettori che soddisfano una struttura algebrica nota come "gruppo abeliano".
+    </p>
+    
+    <h3>Proprietà dei Vettori</h3>
+    <p>
+        Le principali proprietà dei vettori geometrici sono:
+    </p>
+    
+    <ol>
+        <li><strong>Elemento neutro</strong>: $\overrightarrow{OO} = \overrightarrow{0}$ (il vettore nullo)</li>
+        <li><strong>Opposto</strong>: $\overrightarrow{OA} + \overrightarrow{AO} = \overrightarrow{0}$</li>
+        <li><strong>Commutatività</strong>: $\overrightarrow{OA} + \overrightarrow{OB} = \overrightarrow{OB} + \overrightarrow{OA}$</li>
+        <li><strong>Distributività</strong>: $(\overrightarrow{OA_1} + \overrightarrow{OA_2}) + \overrightarrow{OA_3} = \overrightarrow{OC}$, dove vale la relazione $\overrightarrow{OA_1} + (\overrightarrow{OA_2} + \overrightarrow{OA_3}) = \overrightarrow{OC}$</li>
+    </ol>
+    
+    <p>
+        Queste proprietà dimostrano che i vettori geometrici hanno una struttura di gruppo abeliano rispetto all'operazione di addizione.
+    </p>
+    
+    <h3>Moltiplicazione per Scalari</h3>
+    <p>
+        Oltre alla somma, è possibile definire la moltiplicazione di un vettore per uno scalare (un numero reale). 
+        Le proprietà fondamentali di questa operazione sono:
+    </p>
+    
+    <ol>
+        <li>$1 \cdot \overrightarrow{OA} = \overrightarrow{OA}$</li>
+        <li>$0 \cdot \overrightarrow{OA} = \overrightarrow{0}$</li>
+        <li>$k(\overrightarrow{OA} + \overrightarrow{OB}) = k\overrightarrow{OA} + k\overrightarrow{OB}$</li>
+        <li>$(k+\mu)\overrightarrow{OA} = k\overrightarrow{OA} + \mu\overrightarrow{OA}$</li>
+        <li>$(k\mu)\overrightarrow{OA} = k(\mu\overrightarrow{OA})$</li>
+    </ol>
+    
+    <p>
+        La combinazione dell'addizione di vettori e della moltiplicazione per scalari conferisce ai vettori geometrici 
+        una struttura che in algebra lineare viene chiamata "spazio vettoriale".
+    </p>
+    
+    <h2>Coordinate e Sistemi di Riferimento</h2>
+    
+    <h3>Definizione di Sistema di Coordinate</h3>
+    <p>
+        Un concetto fondamentale dell'algebra lineare è la rappresentazione dei vettori tramite coordinate. Dato uno 
+        spazio vettoriale V e una base $B = \{\vec{e}, \vec{i}\}$, è possibile rappresentare 
+        qualsiasi vettore $\vec{v} \in V$ in modo univoco come combinazione lineare degli 
+        elementi della base.
+    </p>
+    
+    <p>
+        Nel nostro caso, ogni vettore $\overrightarrow{OP}$ può essere rappresentato da due numeri 
+        reali $(x_1, x_2)$ tali che:
+    </p>
+    
+    <p class="formula">
+        $\overrightarrow{OP} = x_1\vec{i} + x_2\vec{j}$
+    </p>
+    
+    <p>
+        dove $\vec{i}$ e $\vec{j}$ sono i vettori di base del sistema di riferimento.
+    </p>
+    
+    <h3>Proprietà dei Vettori in Coordinate</h3>
+    <p>
+        Abbiamo dimostrato che, presi due vettori non proporzionali $\vec{i}$ e 
+        $\vec{j}$ di V, per ogni vettore di V esistono due numeri reali univoci $x_1$ e $x_2$ tali che:
+    </p>
+    
+    <p class="formula">
+        $\overrightarrow{OP} = x_1\vec{i} + x_2\vec{j}$
+    </p>
+    
+    <p>
+        Questi numeri $x_1$ e $x_2$ sono le coordinate del vettore $\overrightarrow{OP}$ rispetto alla base 
+        $B = \{\vec{i}, \vec{j}\}$.
+    </p>
+    
+    <p>Nella lezione, abbiamo anche dimostrato che:</p>
+    
+    <p class="formula">
+        $x_1\vec{i} + x_2\vec{j} = \vec{0}$ se e solo se $x_1 = x_2 = 0$
+    </p>
+    
+    <p>
+        Questo risultato è fondamentale per stabilire che $\{\vec{i}, \vec{j}\}$ forma 
+        effettivamente una base per lo spazio vettoriale.
+    </p>
+    
+    <h3>Rappresentazione Matriciale</h3>
+    <p>
+        Una volta stabilito un sistema di riferimento con origine O e base $B = \{\vec{i}, \vec{j}\}$, 
+        possiamo rappresentare ogni punto P dello spazio tramite le coordinate $(x_1, x_2)$ del vettore $\overrightarrow{OP}$.
+    </p>
+    
+    <p>
+        In modo più formale, definiamo un riferimento affine RA$(O, \vec{i}, \vec{j})$. 
+        Se prendiamo un altro riferimento RA$(O', \vec{i'}, \vec{j'})$, 
+        è possibile stabilire una relazione tra le coordinate di uno stesso punto nei due diversi sistemi di riferimento.
+    </p>
+    
+    <h2>Conclusione</h2>
+    <p>
+        Questi concetti fondamentali dell'algebra lineare costituiscono la base per una comprensione più profonda di 
+        strutture matematiche complesse. Le classi di equivalenza permettono di organizzare e classificare elementi 
+        secondo relazioni specifiche, mentre i vettori geometrici forniscono un potente strumento per modellizzare 
+        quantità fisiche e matematiche caratterizzate da magnitudine e direzione.
+    </p>
+    
+    <p>
+        La rappresentazione dei vettori tramite coordinate consente di passare da una descrizione geometrica intuitiva 
+        a una formulazione algebrica precisa, aprendo la strada all'uso di potenti strumenti di calcolo matriciale.
+    </p>
+    
+    <p>
+        Lo studio dell'algebra lineare proseguirà con l'esplorazione di concetti più avanzati come trasformazioni lineari, 
+        autovalori e autovettori, decomposizioni matriciali e applicazioni in vari campi della scienza e dell'ingegneria.
+    </p>
+</body>
+</html>
+, '
+<body>
+    <h1>Introduzione all'Algebra Lineare: Classi di Equivalenza e Vettori Geometrici</h1>
+    
+    <h2>Introduzione</h2>
+    <p>
+        L'algebra lineare rappresenta uno dei pilastri fondamentali della matematica moderna, con applicazioni 
+        che spaziano dalla fisica teorica all'informatica, dall'ingegneria all'analisi dei dati. Questo articolo 
+        si propone di introdurre alcuni concetti basilari dell'algebra lineare, partendo dalle classi di equivalenza 
+        fino ad arrivare ai vettori geometrici e alle loro coordinate. I concetti qui presentati costituiscono la base 
+        necessaria per comprendere strutture matematiche più complesse come spazi vettoriali, trasformazioni lineari 
+        e applicazioni in geometria analitica.
+    </p>
+    
+    <h2>Classi di Equivalenza</h2>
+    
+    <h3>Definizione e Proprietà</h3>
+    <p>
+        Una classe di equivalenza è un concetto matematico che permette di raggruppare elementi secondo una relazione 
+        che soddisfa tre proprietà fondamentali: riflessività, simmetria e transitività. Date un insieme A e una relazione 
+        di equivalenza ℛ, si definisce classe di equivalenza [a] l'insieme di tutti gli elementi x∈A tali che x ℛ a.
+    </p>
+    
+    <p>In notazione formale, una relazione ℛ definisce una classe di equivalenza se:</p>
+    <ul>
+        <li>È riflessiva: ∀a∈A, a ℛ a</li>
+        <li>È simmetrica: ∀a,b∈A, se a ℛ b allora b ℛ a</li>
+        <li>È transitiva: ∀a,b,c∈A, se a ℛ b e b ℛ c allora a ℛ c</li>
+    </ul>
+    
+    <p>
+        Nel contesto della nostra lezione, abbiamo esaminato diverse proprietà delle classi di equivalenza, 
+        dimostrando formalmente il loro comportamento.
+    </p>
+    
+    <h3>Proprietà delle Classi di Equivalenza</h3>
+    
+    <h4>1. Riflessività</h4>
+    <p>
+        La proprietà [a]₁ ≠ ∅ (la classe non è vuota) deriva direttamente dalla riflessività della relazione, 
+        poiché a∈[a]₁.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Per definizione, a ℛ a (riflessività)</li>
+            <li>Quindi a∈[a]₁</li>
+            <li>Pertanto [a]₁ ≠ ∅</li>
+        </ul>
+    </div>
+    
+    <h4>2. Simmetria e Relazione tra Classi</h4>
+    <p>
+        Per qualsiasi coppia di elementi a e b, vale che [a] = [b] se e solo se a ℛ b.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Supponiamo [a] = [b]
+                <ul>
+                    <li>Se c∈[a], allora c ℛ a</li>
+                    <li>Poiché [a] = [b], c∈[b], quindi c ℛ b</li>
+                    <li>In particolare, a∈[a], quindi a ℛ a</li>
+                    <li>Dato che [a] = [b], allora a∈[b], quindi a ℛ b</li>
+                </ul>
+            </li>
+            <li>Viceversa, supponiamo a ℛ b
+                <ul>
+                    <li>Vogliamo dimostrare che [a] = [b]</li>
+                    <li>Se x∈[a], allora x ℛ a</li>
+                    <li>Poiché a ℛ b e la relazione è transitiva, x ℛ b</li>
+                    <li>Quindi x∈[b]</li>
+                    <li>Analogamente, se y∈[b], allora y ℛ b</li>
+                    <li>Poiché a ℛ b e la relazione è simmetrica, b ℛ a</li>
+                    <li>Per transitività, y ℛ a, quindi y∈[a]</li>
+                    <li>Abbiamo dimostrato che [a]⊆[b] e [b]⊆[a], quindi [a]=[b]</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <h4>3. Disgiunzione di Classi Distinte</h4>
+    <p>
+        Se [a] ≠ [b], allora [a]∩[b] = ∅.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Supponiamo per assurdo che esista c∈[a]∩[b]</li>
+            <li>Allora c ℛ a e c ℛ b</li>
+            <li>Per la simmetria, a ℛ c</li>
+            <li>Per la transitività, a ℛ b</li>
+            <li>Quindi, per quanto dimostrato al punto 2, [a] = [b]</li>
+            <li>Ma questo contraddice l'ipotesi [a] ≠ [b]</li>
+            <li>Quindi [a]∩[b] = ∅</li>
+        </ul>
+    </div>
+    
+    <p>
+        Queste proprietà mostrano come le classi di equivalenza partizionino l'insieme A in sottoinsiemi disgiunti.
+    </p>
+    
+    <h2>Vettori Geometrici</h2>
+    
+    <h3>Definizione e Struttura</h3>
+    <p>
+        Nella seconda parte della lezione, abbiamo introdotto il concetto di vettore geometrico. Consideriamo un piano 
+        o uno spazio tridimensionale con un'origine O fissata. Un vettore geometrico rappresenta una quantità caratterizzata 
+        da modulo, direzione e verso.
+    </p>
+    
+    <p>
+        Formalmente, dato un punto A, il vettore <span class="math">&#8594;OA</span> ha origine in O e termina in A. 
+        È possibile definire operazioni sui vettori che soddisfano una struttura algebrica nota come "gruppo abeliano".
+    </p>
+    
+    <h3>Proprietà dei Vettori</h3>
+    <p>
+        Le principali proprietà dei vettori geometrici sono:
+    </p>
+    
+    <ol>
+        <li><strong>Elemento neutro</strong>: <span class="math">&#8594;OO = &#8594;0</span> (il vettore nullo)</li>
+        <li><strong>Opposto</strong>: <span class="math">&#8594;OA + &#8594;AO = &#8594;0</span></li>
+        <li><strong>Commutatività</strong>: <span class="math">&#8594;OA + &#8594;OB = &#8594;OB + &#8594;OA</span></li>
+        <li><strong>Distributività</strong>: <span class="math">(&#8594;OA₁ + &#8594;OA₂) + &#8594;OA₃ = &#8594;OC</span>, dove vale la relazione <span class="math">&#8594;OA₁ + (&#8594;OA₂ + &#8594;OA₃) = &#8594;OC</span></li>
+    </ol>
+    
+    <p>
+        Queste proprietà dimostrano che i vettori geometrici hanno una struttura di gruppo abeliano rispetto all'operazione di addizione.
+    </p>
+    
+    <h3>Moltiplicazione per Scalari</h3>
+    <p>
+        Oltre alla somma, è possibile definire la moltiplicazione di un vettore per uno scalare (un numero reale). 
+        Le proprietà fondamentali di questa operazione sono:
+    </p>
+    
+    <ol>
+        <li><span class="math">1 · &#8594;OA = &#8594;OA</span></li>
+        <li><span class="math">0 · &#8594;OA = &#8594;0</span></li>
+        <li><span class="math">k(&#8594;OA + &#8594;OB) = k&#8594;OA + k&#8594;OB</span></li>
+        <li><span class="math">(k+μ)&#8594;OA = k&#8594;OA + μ&#8594;OA</span></li>
+        <li><span class="math">(kμ)&#8594;OA = k(μ&#8594;OA)</span></li>
+    </ol>
+    
+    <p>
+        La combinazione dell'addizione di vettori e della moltiplicazione per scalari conferisce ai vettori geometrici 
+        una struttura che in algebra lineare viene chiamata "spazio vettoriale".
+    </p>
+    
+    <h2>Coordinate e Sistemi di Riferimento</h2>
+    
+    <h3>Definizione di Sistema di Coordinate</h3>
+    <p>
+        Un concetto fondamentale dell'algebra lineare è la rappresentazione dei vettori tramite coordinate. Dato uno 
+        spazio vettoriale V e una base <span class="math">B = {&#8594;e, &#8594;i}</span>, è possibile rappresentare 
+        qualsiasi vettore <span class="math">&#8594;v ∈ V</span> in modo univoco come combinazione lineare degli 
+        elementi della base.
+    </p>
+    
+    <p>
+        Nel nostro caso, ogni vettore <span class="math">&#8594;OP</span> può essere rappresentato da due numeri 
+        reali (x₁, x₂) tali che:
+    </p>
+    
+    <p class="formula">
+        <span class="math">&#8594;OP = x₁&#8594;i + x₂&#8594;j</span>
+    </p>
+    
+    <p>
+        dove <span class="math">&#8594;i</span> e <span class="math">&#8594;j</span> sono i vettori di base del 
+        sistema di riferimento.
+    </p>
+    
+    <h3>Proprietà dei Vettori in Coordinate</h3>
+    <p>
+        Abbiamo dimostrato che, presi due vettori non proporzionali <span class="math">&#8594;i</span> e 
+        <span class="math">&#8594;j</span> di V, per ogni vettore di V esistono due numeri reali univoci x₁ e x₂ tali che:
+    </p>
+    
+    <p class="formula">
+        <span class="math">&#8594;OP = x₁&#8594;i + x₂&#8594;j</span>
+    </p>
+    
+    <p>
+        Questi numeri x₁ e x₂ sono le coordinate del vettore <span class="math">&#8594;OP</span> rispetto alla base 
+        <span class="math">B = {&#8594;i, &#8594;j}</span>.
+    </p>
+    
+    <p>Nella lezione, abbiamo anche dimostrato che:</p>
+    
+    <p class="formula">
+        <span class="math">x₁&#8594;i + x₂&#8594;j = &#8594;0</span> se e solo se <span class="math">x₁ = x₂ = 0</span>
+    </p>
+    
+    <p>
+        Questo risultato è fondamentale per stabilire che <span class="math">{&#8594;i, &#8594;j}</span> forma 
+        effettivamente una base per lo spazio vettoriale.
+    </p>
+    
+    <h3>Rappresentazione Matriciale</h3>
+    <p>
+        Una volta stabilito un sistema di riferimento con origine O e base <span class="math">B = {&#8594;i, &#8594;j}</span>, 
+        possiamo rappresentare ogni punto P dello spazio tramite le coordinate (x₁, x₂) del vettore <span class="math">&#8594;OP</span>.
+    </p>
+    
+    <p>
+        In modo più formale, definiamo un riferimento affine RA(O, <span class="math">&#8594;i</span>, <span class="math">&#8594;j</span>). 
+        Se prendiamo un altro riferimento RA(O', <span class="math">&#8594;i'</span>, <span class="math">&#8594;j'</span>), 
+        è possibile stabilire una relazione tra le coordinate di uno stesso punto nei due diversi sistemi di riferimento.
+    </p>
+    
+    <h2>Conclusione</h2>
+    <p>
+        Questi concetti fondamentali dell'algebra lineare costituiscono la base per una comprensione più profonda di 
+        strutture matematiche complesse. Le classi di equivalenza permettono di organizzare e classificare elementi 
+        secondo relazioni specifiche, mentre i vettori geometrici forniscono un potente strumento per modellizzare 
+        quantità fisiche e matematiche caratterizzate da magnitudine e direzione.
+    </p>
+    
+    <p>
+        La rappresentazione dei vettori tramite coordinate consente di passare da una descrizione geometrica intuitiva 
+        a una formulazione algebrica precisa, aprendo la strada all'uso di potenti strumenti di calcolo matriciale.
+    </p>
+    
+    <p>
+        Lo studio dell'algebra lineare proseguirà con l'esplorazione di concetti più avanzati come trasformazioni lineari, 
+        autovalori e autovettori, decomposizioni matriciali e applicazioni in vari campi della scienza e dell'ingegneria.
+    </p>
+</body>
+</html>
+], ['\\(', '\\)']],
+                displayMath: [['$', '$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        p {
+            text-align: justify;
+        }
+        .formula {
+            background-color: #f9f9f9;
+            padding: 5px;
+            border-radius: 3px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .dimostrazione {
+            background-color: #f8f9fa;
+            border-left: 3px solid #2ecc71;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .nota {
+            background-color: #fcf8e3;
+            border-left: 3px solid #f39c12;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Introduzione all'Algebra Lineare: Classi di Equivalenza e Vettori Geometrici</h1>
+    
+    <h2>Introduzione</h2>
+    <p>
+        L'algebra lineare rappresenta uno dei pilastri fondamentali della matematica moderna, con applicazioni 
+        che spaziano dalla fisica teorica all'informatica, dall'ingegneria all'analisi dei dati. Questo articolo 
+        si propone di introdurre alcuni concetti basilari dell'algebra lineare, partendo dalle classi di equivalenza 
+        fino ad arrivare ai vettori geometrici e alle loro coordinate. I concetti qui presentati costituiscono la base 
+        necessaria per comprendere strutture matematiche più complesse come spazi vettoriali, trasformazioni lineari 
+        e applicazioni in geometria analitica.
+    </p>
+    
+    <h2>Classi di Equivalenza</h2>
+    
+    <h3>Definizione e Proprietà</h3>
+    <p>
+        Una classe di equivalenza è un concetto matematico che permette di raggruppare elementi secondo una relazione 
+        che soddisfa tre proprietà fondamentali: riflessività, simmetria e transitività. Date un insieme A e una relazione 
+        di equivalenza ℛ, si definisce classe di equivalenza [a] l'insieme di tutti gli elementi x∈A tali che x ℛ a.
+    </p>
+    
+    <p>In notazione formale, una relazione ℛ definisce una classe di equivalenza se:</p>
+    <ul>
+        <li>È riflessiva: ∀a∈A, a ℛ a</li>
+        <li>È simmetrica: ∀a,b∈A, se a ℛ b allora b ℛ a</li>
+        <li>È transitiva: ∀a,b,c∈A, se a ℛ b e b ℛ c allora a ℛ c</li>
+    </ul>
+    
+    <p>
+        Nel contesto della nostra lezione, abbiamo esaminato diverse proprietà delle classi di equivalenza, 
+        dimostrando formalmente il loro comportamento.
+    </p>
+    
+    <h3>Proprietà delle Classi di Equivalenza</h3>
+    
+    <h4>1. Riflessività</h4>
+    <p>
+        La proprietà [a]₁ ≠ ∅ (la classe non è vuota) deriva direttamente dalla riflessività della relazione, 
+        poiché a∈[a]₁.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Per definizione, a ℛ a (riflessività)</li>
+            <li>Quindi a∈[a]₁</li>
+            <li>Pertanto [a]₁ ≠ ∅</li>
+        </ul>
+    </div>
+    
+    <h4>2. Simmetria e Relazione tra Classi</h4>
+    <p>
+        Per qualsiasi coppia di elementi a e b, vale che [a] = [b] se e solo se a ℛ b.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Supponiamo [a] = [b]
+                <ul>
+                    <li>Se c∈[a], allora c ℛ a</li>
+                    <li>Poiché [a] = [b], c∈[b], quindi c ℛ b</li>
+                    <li>In particolare, a∈[a], quindi a ℛ a</li>
+                    <li>Dato che [a] = [b], allora a∈[b], quindi a ℛ b</li>
+                </ul>
+            </li>
+            <li>Viceversa, supponiamo a ℛ b
+                <ul>
+                    <li>Vogliamo dimostrare che [a] = [b]</li>
+                    <li>Se x∈[a], allora x ℛ a</li>
+                    <li>Poiché a ℛ b e la relazione è transitiva, x ℛ b</li>
+                    <li>Quindi x∈[b]</li>
+                    <li>Analogamente, se y∈[b], allora y ℛ b</li>
+                    <li>Poiché a ℛ b e la relazione è simmetrica, b ℛ a</li>
+                    <li>Per transitività, y ℛ a, quindi y∈[a]</li>
+                    <li>Abbiamo dimostrato che [a]⊆[b] e [b]⊆[a], quindi [a]=[b]</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <h4>3. Disgiunzione di Classi Distinte</h4>
+    <p>
+        Se [a] ≠ [b], allora [a]∩[b] = ∅.
+    </p>
+    
+    <div class="dimostrazione">
+        <strong>Dimostrazione:</strong>
+        <ul>
+            <li>Supponiamo per assurdo che esista c∈[a]∩[b]</li>
+            <li>Allora c ℛ a e c ℛ b</li>
+            <li>Per la simmetria, a ℛ c</li>
+            <li>Per la transitività, a ℛ b</li>
+            <li>Quindi, per quanto dimostrato al punto 2, [a] = [b]</li>
+            <li>Ma questo contraddice l'ipotesi [a] ≠ [b]</li>
+            <li>Quindi [a]∩[b] = ∅</li>
+        </ul>
+    </div>
+    
+    <p>
+        Queste proprietà mostrano come le classi di equivalenza partizionino l'insieme A in sottoinsiemi disgiunti.
+    </p>
+    
+    <h2>Vettori Geometrici</h2>
+    
+    <h3>Definizione e Struttura</h3>
+    <p>
+        Nella seconda parte della lezione, abbiamo introdotto il concetto di vettore geometrico. Consideriamo un piano 
+        o uno spazio tridimensionale con un'origine O fissata. Un vettore geometrico rappresenta una quantità caratterizzata 
+        da modulo, direzione e verso.
+    </p>
+    
+    <p>
+        Formalmente, dato un punto A, il vettore <span class="math">&#8594;OA</span> ha origine in O e termina in A. 
+        È possibile definire operazioni sui vettori che soddisfano una struttura algebrica nota come "gruppo abeliano".
+    </p>
+    
+    <h3>Proprietà dei Vettori</h3>
+    <p>
+        Le principali proprietà dei vettori geometrici sono:
+    </p>
+    
+    <ol>
+        <li><strong>Elemento neutro</strong>: <span class="math">&#8594;OO = &#8594;0</span> (il vettore nullo)</li>
+        <li><strong>Opposto</strong>: <span class="math">&#8594;OA + &#8594;AO = &#8594;0</span></li>
+        <li><strong>Commutatività</strong>: <span class="math">&#8594;OA + &#8594;OB = &#8594;OB + &#8594;OA</span></li>
+        <li><strong>Distributività</strong>: <span class="math">(&#8594;OA₁ + &#8594;OA₂) + &#8594;OA₃ = &#8594;OC</span>, dove vale la relazione <span class="math">&#8594;OA₁ + (&#8594;OA₂ + &#8594;OA₃) = &#8594;OC</span></li>
+    </ol>
+    
+    <p>
+        Queste proprietà dimostrano che i vettori geometrici hanno una struttura di gruppo abeliano rispetto all'operazione di addizione.
+    </p>
+    
+    <h3>Moltiplicazione per Scalari</h3>
+    <p>
+        Oltre alla somma, è possibile definire la moltiplicazione di un vettore per uno scalare (un numero reale). 
+        Le proprietà fondamentali di questa operazione sono:
+    </p>
+    
+    <ol>
+        <li><span class="math">1 · &#8594;OA = &#8594;OA</span></li>
+        <li><span class="math">0 · &#8594;OA = &#8594;0</span></li>
+        <li><span class="math">k(&#8594;OA + &#8594;OB) = k&#8594;OA + k&#8594;OB</span></li>
+        <li><span class="math">(k+μ)&#8594;OA = k&#8594;OA + μ&#8594;OA</span></li>
+        <li><span class="math">(kμ)&#8594;OA = k(μ&#8594;OA)</span></li>
+    </ol>
+    
+    <p>
+        La combinazione dell'addizione di vettori e della moltiplicazione per scalari conferisce ai vettori geometrici 
+        una struttura che in algebra lineare viene chiamata "spazio vettoriale".
+    </p>
+    
+    <h2>Coordinate e Sistemi di Riferimento</h2>
+    
+    <h3>Definizione di Sistema di Coordinate</h3>
+    <p>
+        Un concetto fondamentale dell'algebra lineare è la rappresentazione dei vettori tramite coordinate. Dato uno 
+        spazio vettoriale V e una base <span class="math">B = {&#8594;e, &#8594;i}</span>, è possibile rappresentare 
+        qualsiasi vettore <span class="math">&#8594;v ∈ V</span> in modo univoco come combinazione lineare degli 
+        elementi della base.
+    </p>
+    
+    <p>
+        Nel nostro caso, ogni vettore <span class="math">&#8594;OP</span> può essere rappresentato da due numeri 
+        reali (x₁, x₂) tali che:
+    </p>
+    
+    <p class="formula">
+        <span class="math">&#8594;OP = x₁&#8594;i + x₂&#8594;j</span>
+    </p>
+    
+    <p>
+        dove <span class="math">&#8594;i</span> e <span class="math">&#8594;j</span> sono i vettori di base del 
+        sistema di riferimento.
+    </p>
+    
+    <h3>Proprietà dei Vettori in Coordinate</h3>
+    <p>
+        Abbiamo dimostrato che, presi due vettori non proporzionali <span class="math">&#8594;i</span> e 
+        <span class="math">&#8594;j</span> di V, per ogni vettore di V esistono due numeri reali univoci x₁ e x₂ tali che:
+    </p>
+    
+    <p class="formula">
+        <span class="math">&#8594;OP = x₁&#8594;i + x₂&#8594;j</span>
+    </p>
+    
+    <p>
+        Questi numeri x₁ e x₂ sono le coordinate del vettore <span class="math">&#8594;OP</span> rispetto alla base 
+        <span class="math">B = {&#8594;i, &#8594;j}</span>.
+    </p>
+    
+    <p>Nella lezione, abbiamo anche dimostrato che:</p>
+    
+    <p class="formula">
+        <span class="math">x₁&#8594;i + x₂&#8594;j = &#8594;0</span> se e solo se <span class="math">x₁ = x₂ = 0</span>
+    </p>
+    
+    <p>
+        Questo risultato è fondamentale per stabilire che <span class="math">{&#8594;i, &#8594;j}</span> forma 
+        effettivamente una base per lo spazio vettoriale.
+    </p>
+    
+    <h3>Rappresentazione Matriciale</h3>
+    <p>
+        Una volta stabilito un sistema di riferimento con origine O e base <span class="math">B = {&#8594;i, &#8594;j}</span>, 
+        possiamo rappresentare ogni punto P dello spazio tramite le coordinate (x₁, x₂) del vettore <span class="math">&#8594;OP</span>.
+    </p>
+    
+    <p>
+        In modo più formale, definiamo un riferimento affine RA(O, <span class="math">&#8594;i</span>, <span class="math">&#8594;j</span>). 
+        Se prendiamo un altro riferimento RA(O', <span class="math">&#8594;i'</span>, <span class="math">&#8594;j'</span>), 
+        è possibile stabilire una relazione tra le coordinate di uno stesso punto nei due diversi sistemi di riferimento.
+    </p>
+    
+    <h2>Conclusione</h2>
+    <p>
+        Questi concetti fondamentali dell'algebra lineare costituiscono la base per una comprensione più profonda di 
+        strutture matematiche complesse. Le classi di equivalenza permettono di organizzare e classificare elementi 
+        secondo relazioni specifiche, mentre i vettori geometrici forniscono un potente strumento per modellizzare 
+        quantità fisiche e matematiche caratterizzate da magnitudine e direzione.
+    </p>
+    
+    <p>
+        La rappresentazione dei vettori tramite coordinate consente di passare da una descrizione geometrica intuitiva 
+        a una formulazione algebrica precisa, aprendo la strada all'uso di potenti strumenti di calcolo matriciale.
+    </p>
+    
+    <p>
+        Lo studio dell'algebra lineare proseguirà con l'esplorazione di concetti più avanzati come trasformazioni lineari, 
+        autovalori e autovettori, decomposizioni matriciali e applicazioni in vari campi della scienza e dell'ingegneria.
+    </p>
+</body>
+</html>
